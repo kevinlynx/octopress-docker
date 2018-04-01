@@ -1,8 +1,11 @@
-FROM ubuntu:16.04
+FROM registry.cn-hangzhou.aliyuncs.com/lovekun/ubuntu-16.04:1.0.0
 
 MAINTAINER Peter Humburg <peter.humburg@gmail.com>
 
 ENV LC_ALL C.UTF-8
+
+COPY source.list /tmp
+RUN cp /tmp/source.list /etc/apt/source.list
 
 # Get dependencies
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 575159689BEFB442 && \
@@ -18,13 +21,8 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 575159689B
   apt-get clean
 
 # Install pandoc
-RUN git clone https://github.com/jgm/pandoc.git /source/pandoc && \
-    cd /source/pandoc && \
-    git checkout tags/1.17.2 -b v1.17.2 && \
-    git submodule update --init && \
-    stack setup && \
-    stack --local-bin-path /usr/local/bin install && \
-    cd / && rm -r /source/pandoc
+RUN apt-get install -y pandoc
+
 
 # Install octopress
 RUN git clone git://github.com/imathis/octopress.git /octopress && \
