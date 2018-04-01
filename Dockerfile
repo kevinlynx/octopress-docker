@@ -25,7 +25,7 @@ RUN apt-get install -y pandoc
 
 
 # Install octopress
-RUN git clone git://github.com/imathis/octopress.git /octopress && \
+RUN git clone git://github.com/kevinlynx/codemacro-source.git /octopress && \
     cd /octopress && \
     gem install bundler && \
     bundle install
